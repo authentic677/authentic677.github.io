@@ -1,0 +1,277 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>手动VPN | 自由blog</title><meta name="author" content="677"><meta name="copyright" content="677"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="手动模拟实现VPN 本项目旨在模拟VPN效果的一种实现，分为客户端和服务端两个程序，客户端程序是一个安卓APP，用Android Studio作为开发IDE，服务端程序是一个运行于Linux系统上的C语言程序，用Clion作为开发IDE。 了解Android Studio，就不得不了解Ktolin，早年间安卓开发虽然用的是Java，但是现在已经流行用Kotlin，&#96;&#96;Ktolin&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="手动VPN">
+<meta property="og:url" content="http://example.com/2024/08/20/%E6%89%8B%E5%8A%A8VPN/index.html">
+<meta property="og:site_name" content="自由blog">
+<meta property="og:description" content="手动模拟实现VPN 本项目旨在模拟VPN效果的一种实现，分为客户端和服务端两个程序，客户端程序是一个安卓APP，用Android Studio作为开发IDE，服务端程序是一个运行于Linux系统上的C语言程序，用Clion作为开发IDE。 了解Android Studio，就不得不了解Ktolin，早年间安卓开发虽然用的是Java，但是现在已经流行用Kotlin，&#96;&#96;Ktolin&amp;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2024-08-20T14:35:09.000Z">
+<meta property="article:modified_time" content="2024-09-10T02:56:52.569Z">
+<meta property="article:author" content="677">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2024/08/20/%E6%89%8B%E5%8A%A8VPN/index.html"><link rel="preconnect" href="//unpkg.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://unpkg.com/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '手动VPN',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-09-10 10:56:52'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (false) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/21.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="自由blog"><span class="site-name">自由blog</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">手动VPN</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-08-20T14:35:09.000Z" title="Created 2024-08-20 22:35:09">2024-08-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-09-10T02:56:52.569Z" title="Updated 2024-09-10 10:56:52">2024-09-10</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="手动VPN"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>手动模拟实现VPN</p>
+<p>本项目旨在模拟VPN效果的一种实现，分为客户端和服务端两个程序，客户端程序是一个安卓APP，用<code>Android Studio</code>作为开发IDE，服务端程序是一个运行于Linux系统上的C语言程序，用<code>Clion</code>作为开发IDE。</p>
+<p>了解<code>Android Studio</code>，就不得不了解<code>Ktolin</code>，早年间安卓开发虽然用的是Java，但是现在已经流行用<code>Kotlin</code>，&#96;&#96;Ktolin&#96;是一种有别于Java语法的基于JVM的编程语言，它的官网：<a target="_blank" rel="noopener" href="https://kotlinlang.org/">Kotlin Programming Language (kotlinlang.org)</a>，可从此官网页面<a target="_blank" rel="noopener" href="https://kotlinlang.org/docs/command-line.html">Kotlin command-line compiler | Kotlin Documentation (kotlinlang.org)</a>获取命令行编译器，下载解压后如下</p>
+<p><img src="/images/%E6%89%8B%E5%8A%A8VPN.assets/image-20240826225811968.png" alt="image-20240826225811968"></p>
+<p>bin目录包含kotlinc脚本，此脚本可以用于编译kotlin程序，可将此路径添加到PATH环境变量</p>
+<p><img src="/images/%E6%89%8B%E5%8A%A8VPN.assets/image-20240826230027864.png" alt="image-20240826230027864"></p>
+<p>直接运行kotlinc会进入一个交互式环境，从输出中可知，kotlin编译器依赖于jvm，可以推断，kotlin编译器是用java或其它能编译成字节码的语言写的</p>
+<p><img src="/images/%E6%89%8B%E5%8A%A8VPN.assets/image-20240826230210585.png" alt="image-20240826230210585"></p>
+<p>也可以将代码从源文件编译执行</p>
+<p><img src="/images/%E6%89%8B%E5%8A%A8VPN.assets/image-20240826230852896.png" alt="image-20240826230852896"></p>
+<p>另一个需要了解的东西是Gradle，一个Java项目构建管理工具，不同于Java Web开发的Maven，安卓开发一般用它管理项目</p>
+<p>Android Studio能从虚拟机运行构建后的APP，也能USB连接真机运行，真机需要开启开发者模式，并且允许USB调试，此外，还需确保电脑防火墙没有阻止adb通信，否则都会造成<strong>检测不到</strong>真机的情况。<code>bulid</code>菜单提供了项目构建相关操作，构建输出一般在<code>app/build/outputs</code>目录下</p>
+<p>安卓的<code>VpnService</code>类提供了在安卓系统上建立vpn的能力，新建一个继承此类的类后，核心代码如下所示</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">setupVpn</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> builder = Builder()</span><br><span class="line">    builder.setSession(<span class="string">&quot;My VPN Service&quot;</span>)</span><br><span class="line">    .addAddress(<span class="string">&quot;10.0.0.2&quot;</span>, <span class="number">24</span>) <span class="comment">//客户端分配的IP地址</span></span><br><span class="line">    .addRoute(<span class="string">&quot;0.0.0.0&quot;</span>, <span class="number">0</span>) <span class="comment">//路由所有地址的流量</span></span><br><span class="line">    .addDnsServer(<span class="string">&quot;8.8.8.8&quot;</span>) <span class="comment">//如果不配，那么dns走的是本地</span></span><br><span class="line">    .addDisallowedApplication(<span class="string">&quot;com.termux&quot;</span>) <span class="comment">//排除此应用程序的流量</span></span><br><span class="line"></span><br><span class="line">    vpnInterface = builder.establish()</span><br><span class="line">    <span class="keyword">if</span> (vpnInterface == <span class="literal">null</span>) &#123;</span><br><span class="line">        Log.e(TAG, <span class="string">&quot;Failed to establish VPN&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Log.d(TAG, <span class="string">&quot;VPN Established&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Start reading data in a separate thread</span></span><br><span class="line">    thread &#123;</span><br><span class="line">        readPackets()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为了防止VPN程序自身的网络流量被路由，可以使用如下代码</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> connectivityManager:ConnectivityManager =getSystemService(Context.CONNECTIVITY_SERVICE) <span class="keyword">as</span> ConnectivityManager</span><br><span class="line"><span class="comment">//当前活动的网络，要么是wifi，要么是流量</span></span><br><span class="line"><span class="keyword">val</span> activeNetwork:Network? = connectivityManager.activeNetwork</span><br><span class="line">connectivityManager.bindProcessToNetwork(activeNetwork) <span class="comment">//防止vpn应用自身的流量被重定向</span></span><br></pre></td></tr></table></figure>
+
+<p>拿到<code>vpnInterface</code>后，可以用它获取输入输出流，输入流每次读取到的是一个IP数据包。需要注意的是，IP包的源地址会被替换成配置的IP地址，如上例10.0.0.2，写入IP包时，目的地址保持一致即可。接下来的逻辑就是，不断从输入流读取IP数据包，然后不断从输出流写入IP数据包，实现网络联通。至于读出来的IP包怎么用，完全由VPN客户端程序自己决定。</p>
+<p>通常的处理方式是，将IP包通过某种方式发送到另一台服务器进程上，这种方式可以是使用原始的tcp字节流配合自定义的的应用层协议，也可以是采用ws这种不需要处理消息边界的协议，而且一般是加密通信，在数据传输开始之前，一般会协商此次连接客户端的虚拟IP。远端进程收到IP包后，通过某种方式写入到某个网络接口，并且监听这个网络接口关于写入的数据包的回包，读取并且发送回本地进程，本地进程收到数据包后，再写入它的vpn输出流</p>
+<p>上述内容相关参考资料：</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/asdzheng/vpnservices">asdzheng&#x2F;vpnservices: 安卓vpnservices的使用经验总结 (github.com)</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/net/VpnService">VpnService  | Android Developers</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.runoob.com/kotlin/kotlin-basic-types.html">https://www.runoob.com/kotlin/kotlin-basic-types.html</a></p>
+</li>
+</ul>
+<p>Linux系统上可以使用TUN&#x2F;TAP机制创建一个虚拟网络接口，TUN设备工作在网络层，处理的是IP包数据，TAP设备工作在链路层，那么可以处理以太网帧数据。写入虚拟网络接口的数据也会被操作系统协议栈处理，当开启了ip转发后，可以被路由到其他真实网络接口，从而将数据包发送到真实网络上。为了能接收回包以实现双向通信，一般还要搞一个源地址转换的NAT，可以通过iptables实现。</p>
+<p>C语言创建tun设备的核心代码如下，使用icotl系统调用在程序运行期间生成tun设备，并进行相关配置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">create_tun</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> fd;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ifreq</span> <span class="title">ifr</span>;</span></span><br><span class="line">    <span class="type">char</span> *dev = <span class="string">&quot;/dev/net/tun&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 打开 TUN 设备 O_RDWR表示读写模式</span></span><br><span class="line">    fd = open(dev, O_RDWR);</span><br><span class="line">    <span class="keyword">if</span> (fd &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        perror(<span class="string">&quot;open&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 清空 ifreq 结构体</span></span><br><span class="line">    <span class="built_in">memset</span>(&amp;ifr, <span class="number">0</span>, <span class="keyword">sizeof</span>(ifr));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置设备名称</span></span><br><span class="line">    ifr.ifr_flags = IFF_TUN | IFF_NO_PI; <span class="comment">// 使用 TUN 设备，不添加协议头</span></span><br><span class="line">    <span class="built_in">strncpy</span>(ifr.ifr_name, <span class="string">&quot;tun0&quot;</span>, IFNAMSIZ);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建 TUN 设备, 当程序结束时，tun设备也会消失</span></span><br><span class="line">    <span class="keyword">if</span> (ioctl(fd, TUNSETIFF, (<span class="type">void</span> *)&amp;ifr) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        perror(<span class="string">&quot;ioctl TUNSETIFF&quot;</span>);</span><br><span class="line">        close(fd);</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Created TUN device: %s\n&quot;</span>, ifr.ifr_name);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//配置它的网络</span></span><br><span class="line">    system(<span class="string">&quot;ip addr add 10.0.0.1/24 dev tun0&quot;</span>); <span class="comment">//为tun设备分配ip</span></span><br><span class="line">    system(<span class="string">&quot;ip link set dev tun0 up&quot;</span>); <span class="comment">//启用tun设备</span></span><br><span class="line">    system(<span class="string">&quot;ip route add 10.0.0.0/24 dev tun0&quot;</span>); <span class="comment">//为tun设备添加路由规则</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> fd;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>iptables配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -t nat -A POSTROUTING -o ens33 -s 10.0.0.0/24 -j MASQUERADE <span class="comment">#开启网络地址转换</span></span><br></pre></td></tr></table></figure>
+
+<p>此命令也可以用来查看路由表，而且非常直观形象</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -rn</span><br></pre></td></tr></table></figure>
+
+<p>查看ip转发状态，0表示关闭，1表示启用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /proc/sys/net/ipv4/ip_forward</span><br></pre></td></tr></table></figure>
+
+<p>永久开启，编辑此配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /etc/sysctl/conf</span><br></pre></td></tr></table></figure>
+
+<p>添加</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.ip_forward=1</span><br></pre></td></tr></table></figure>
+
+<p>应用更改</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
+
+<p>最好重启确保一定生效</p>
+<p>Linux系统关于TUN&#x2F;TAP的虚拟网卡技术，相关参考资料</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.junmajinlong.com/virtual/network/all_about_tun_tap/">理解Linux虚拟网卡设备tun&#x2F;tap的一切 | 骏马金龙 (junmajinlong.com)</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://csms.tech/202304241633/">linux tun&#x2F;tap 设备的工作原理 | L B T (csms.tech)</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.zhaohuabing.com/post/2020-02-24-linux-taptun/">Linux Tun&#x2F;Tap 介绍-赵化冰的博客 | Zhaohuabing Blog</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1891615">☀️苏州程序大白解析Linux 中的虚拟网络接口☀️《❤️记得收藏❤️》-腾讯云开发者社区-腾讯云 (tencent.com)</a></p>
+</li>
+</ul>
+<p>在C语言中，获取了tun设备的文件描述符后，就可以用read和write系统调用读取和写入数据了</p>
+<p>在Windows系统上，可以使用Hyper-V创建虚拟网络接口，Hyper-V是微软提供的一个内置虚拟化工具，使用流程如下</p>
+<p>启用 Hyper-V 功能</p>
+<ol>
+<li>打开 “控制面板” &gt; “程序” &gt; “启用或关闭 Windows 功能”。</li>
+<li>勾选 “Hyper-V” 选项，然后点击 “确定”。</li>
+<li>系统会安装必要的组件并提示重启。</li>
+</ol>
+<p>创建虚拟交换机</p>
+<ol>
+<li>打开 “Hyper-V 管理器”。</li>
+<li>在右侧的操作栏中，点击 “虚拟交换机管理器”。</li>
+<li>选择 “新建虚拟网络交换机”。</li>
+<li>选择 “内部” 作为交换机类型，然后点击 “创建虚拟交换机”。</li>
+<li>为交换机命名，并确保选择了 “内部网络” 选项。</li>
+<li>点击 “确定” 保存设置。</li>
+</ol>
+<p>为虚拟交换机配置 NAT</p>
+<ol>
+<li><p>打开 PowerShell，使用管理员权限运行。</p>
+</li>
+<li><p>创建一个新的 NAT 网络：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">New-NetIPAddress</span> <span class="literal">-IPAddress</span> <span class="number">192.168</span>.<span class="number">100.1</span> <span class="literal">-PrefixLength</span> <span class="number">24</span> <span class="literal">-InterfaceAlias</span> <span class="string">&quot;vEthernet (你的交换机名称)&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置 NAT 配置：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">New-NetNat</span> <span class="literal">-Name</span> <span class="string">&quot;MyNAT&quot;</span> <span class="literal">-InternalIPInterfaceAddressPrefix</span> <span class="string">&quot;192.168.100.0/24&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>上述流程完毕后，你会看到系统多了一个虚拟网络接口，并且ip地址是192.168.100.1，此虚拟网络接口能处理以太网帧数据，并且具有NAT功能，虚拟网络的网关就是本机，凡是发到本机此网络接口MAC地址的IP包都会经过NAT处理以与外部网络通信。但是要想在此网络接收到回包，还需要一个还需要有一个虚拟的ARP行为，以便网关根据ip找到mac地址</p>
+<p>为方便，Windows系统上服务端程序的实现可以用Python语言配合scapy+websockets库，scapy是用于向网络接口发送和监听网络数据包的库，也可以解析原始二进制包数据。websockets是用于创建ws服务器的库。</p>
+<p>顺便提一下，关于类似scapy的库Java有pcap4j，但用起来不如scapy方便，更主要的是，它貌似不能自动计算IP包头部和TCP包头部的校验和。关于tcp的checksum问题，需要注意的是，当网络地址转换后要相应地重新计算checksum，否则不正确的checksum的包会被丢弃，这点非常重要，尤其是当你在程序中要手动实现NAT时，关于如何计算checksum，见：<a target="_blank" rel="noopener" href="http://bruce690813.blogspot.com/2017/09/tcpip-checksum.html%EF%BC%8CJava%E4%BB%A3%E7%A0%81%E5%A6%82%E4%B8%8B">http://bruce690813.blogspot.com/2017/09/tcpip-checksum.html，Java代码如下</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">calculateChecksum</span><span class="params">(<span class="type">byte</span>[] header)</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (header.length % <span class="number">2</span> !=<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="type">byte</span>[] checksum = <span class="keyword">new</span> <span class="title class_">byte</span>[header.length+<span class="number">1</span>];</span><br><span class="line">        System.arraycopy(header, <span class="number">0</span>, checksum, <span class="number">0</span>, header.length);</span><br><span class="line"></span><br><span class="line">        header=checksum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> <span class="variable">length</span> <span class="operator">=</span> header.length;</span><br><span class="line">    <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Add 16-bit chunks to the sum</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; length - <span class="number">1</span>; i += <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">firstByte</span> <span class="operator">=</span> (header[i] &lt;&lt; <span class="number">8</span>) &amp; <span class="number">0xFF00</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">secondByte</span> <span class="operator">=</span> header[i + <span class="number">1</span>] &amp; <span class="number">0xFF</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">chunk</span> <span class="operator">=</span> firstByte | secondByte;</span><br><span class="line"></span><br><span class="line">        sum += chunk;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((sum &amp; <span class="number">0xFFFF0000</span>) != <span class="number">0</span>) &#123;</span><br><span class="line">        sum += ((sum &amp; <span class="number">0xFFFF0000</span>) &gt;&gt; <span class="number">16</span>)&amp;<span class="number">0xFFFF</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    sum= ~sum;</span><br><span class="line">    <span class="comment">// Return only the lower 16 bits</span></span><br><span class="line">    sum= sum &amp; <span class="number">0xFFFF</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>TCP包是一定需要校验和的，包括下层的IP包也要有。</p>
+<p>关于校验和通过抓包发现一个神奇现象</p>
+<p>linux系统发的tcp包，ip头和tcp头的校验和都有，且计算方法就是上述的计算方法，这种是可以通过验证的</p>
+<p>windows系统发的tcp包，ip头校验和可能为0，tcp头校验和有，但是不是通过上述的计算方法计算的(如果按上述计算方法计算，则通不过验证)，不知道是怎么计算的，但是也能通过验证</p>
+<p>这里所说的通过验证是指tcp的syn报文能收到对端的syn&#x2F;ack回应</p>
+<p>你可能会想，既然都有直接往网络接口发送和接收数据包的库了？为什么还要额外创建虚拟网络接口，而不是直接将其发送到真实的网络接口呢？这主要是为了避免手动处理NAT问题，手动NAT非常复杂(对于我这种菜鸟而言)且性能、稳定性、可靠性都不好，我在之前的尝试中把NAT想得太简单了，以为只是简单地替换ip和端口，实践才知道，有各种问题，所以不得不采用现成的能避免我解决NAT的方案。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://example.com">677</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://example.com/2024/08/20/%E6%89%8B%E5%8A%A8VPN/">http://example.com/2024/08/20/%E6%89%8B%E5%8A%A8VPN/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://unpkg.com/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://unpkg.com/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/08/25/C%E8%AF%AD%E8%A8%80Linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/" title="C语言Linux系统调用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">C语言Linux系统调用</div></div></a></div><div class="next-post pull-right"><a href="/2024/08/04/%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E8%BF%87%E7%A8%8B/" title="项目部署过程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">项目部署过程</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">677</div><div class="author-info__description">搞机爱好者</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/08/halo%E7%9A%84%E4%BD%BF%E7%94%A8/" title="halo的使用">halo的使用</a><time datetime="2024-09-08T07:05:21.000Z" title="Created 2024-09-08 15:05:21">2024-09-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/05/%E5%BE%AE%E5%8D%9Aweb%E6%8E%A5%E5%8F%A3%E5%88%86%E6%9E%90/" title="微博web接口分析">微博web接口分析</a><time datetime="2024-09-05T01:43:03.000Z" title="Created 2024-09-05 09:43:03">2024-09-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/01/%E5%BD%92%E6%A1%A3%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/" title="归档文件格式">归档文件格式</a><time datetime="2024-09-01T03:39:09.000Z" title="Created 2024-09-01 11:39:09">2024-09-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/31/FHS/" title="FHS">FHS</a><time datetime="2024-08-31T12:18:15.000Z" title="Created 2024-08-31 20:18:15">2024-08-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/30/EGE%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/" title="EGE库的使用">EGE库的使用</a><time datetime="2024-08-30T09:19:53.000Z" title="Created 2024-08-30 17:19:53">2024-08-30</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By 677</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="chat-btn" type="button" title="Chat"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://unpkg.com/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.js"></script><div class="js-pjax"></div><script id="click-show-text" src="https://unpkg.com/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="false" data-text="I,LOVE,YOU" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
